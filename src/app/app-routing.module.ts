@@ -7,10 +7,10 @@ import { HomeComponent } from './pages/home/home.component';
 const routes: Routes = [
   {
     path: '', 
-    component: HomeComponent, 
     canActivate: [
       IsAuthorizeGuard
-    ]
+    ],
+    loadChildren: () => import('./pages/pages-routing.module').then(m => m.PagesRoutingModule)
   },
   {
     path: 'login', 

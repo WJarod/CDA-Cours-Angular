@@ -33,4 +33,13 @@ export class LoginComponent implements OnInit, ILogin {
     }
   }
 
+  forceLogin(){
+    localStorage.setItem('token', 'true');
+      if(localStorage.getItem('token') == "true")
+      {
+        console.log("login")
+        this.router.navigate(['/'])
+      }
+  }
+
 }
