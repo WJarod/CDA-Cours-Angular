@@ -1,0 +1,27 @@
+<button class="button is-primary mt-6" (click)="!writeBlacklisted ? writeBlacklisted = true : writeBlacklisted = false">
+    <div *ngIf="!writeBlacklisted; else elseBlock">
+        Afficher les offres blacklistées ({{blacklistedOffers}})
+    </div>
+    <ng-template #elseBlock>
+        Cacher les offres blacklistées
+    </ng-template>
+</button>
+
+<div class="is-one-quarter" *ngFor="let offer of offers">
+    <div *ngIf="!writeBlacklisted; else elseBlock">
+        <div *ngIf="!offer.isBlacklisted">
+            <app-offer-preview 
+            [data]="offer" 
+            (blacklist)="blacklistedOffer($event)">
+            </app-offer-preview>
+        </div>
+    </div>
+    <ng-template #elseBlock>
+        <div *ngIf="offer.isBlacklisted">
+            <app-offer-preview 
+            [data]="offer" 
+            (unBlacklist)="unBlacklistedOffer($event)">
+            </app-offer-preview>
+        </div>
+    </ng-template>
+</div>
