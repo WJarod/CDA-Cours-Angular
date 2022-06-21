@@ -20,11 +20,6 @@
       <button class="card-footer-item button is-primary is-outlined mx-6 my-2" (click)="offer.isFavorite = true">Save</button>
       <button class="card-footer-item button is-primary is-outlined mx-6 my-2" (click)="offer.isApply = true">Apply</button>
       <button class="card-footer-item button is-primary is-outlined mx-6 my-2" (click)="!offer.isBlacklisted ? blacklistedOffer() : unBlacklistedOffer()">
-        <div *ngIf="!offer.isBlacklisted ; else elseBlock">
-            Blacklist
-        </div>
-        <ng-template #elseBlock>
-            Unblacklist
-        </ng-template></button>
+        {{!offer.isBlacklisted ? 'Blacklist' : 'Unblacklist'}}</button>
     </footer>
   </div>
