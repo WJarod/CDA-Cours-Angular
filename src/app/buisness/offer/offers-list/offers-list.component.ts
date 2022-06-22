@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Offer } from '../models/offer';
+import { OfferService } from '../services/offer.service';
 
 @Component({
   selector: 'app-offers-list',
@@ -8,45 +9,19 @@ import { Offer } from '../models/offer';
 })
 export class OffersListComponent implements OnInit {
 
-  offers: Offer[] = [
-    {
-      id: '1',
-      designation: 'Offer 1',
-      description: 'Offer 1 description',
-      contract: 'Offer 1 contract',
-      salary: '100',
-      isApply: false,
-      isFavorite: false,
-      isBlacklisted: false,
-    },{
-      id: '2',
-      designation: 'Offer 2',
-      description: 'Offer 2 description',
-      contract: 'Offer 2 contract',
-      salary: '200',
-      isApply: false,
-      isFavorite: false,
-      isBlacklisted: false,
-    },{
-      id: '3',
-      designation: 'Offer 3',
-      description: 'Offer 3 description',
-      contract: 'Offer 3 contract',
-      salary: '300',
-      isApply: false,
-      isFavorite: false,
-      isBlacklisted: false,
-    }
-  ];
-
   writeBlacklisted: boolean = false;
 
   blacklistedOffers: number = 0;
 
-  constructor() { }
+  offers: Offer[] = this.offerService.getOffers();
+
+  constructor(
+    private offerService: OfferService,
+  ) { }
 
   ngOnInit(): void {
     this.writeDatas();
+    this.checkBlacklisted(this.offers)
   }
 
   writeDatas(): void {
@@ -55,13 +30,23 @@ export class OffersListComponent implements OnInit {
 
   blacklistedOffer(str: string): void {
     console.log('Cette offre a ete blackliste : ' + str);
-    this.blacklistedOffers++;
+    this.checkBlacklisted(this.offers)
     this.writeDatas();
   }
 
   unBlacklistedOffer(str: string): void {
     console.log('Cette offre a ete unBlackliste : ' + str);
-    this.blacklistedOffers--;
+    this.checkBlacklisted(this.offers)
     this.writeDatas();
   }
+
+  checkBlacklisted(offers: Offer[]): void {
+    this.blacklistedOffers = 0;
+    offers.forEach(offer => { 
+      if (offer.isBlacklisted) {
+        this.blacklistedOffers++;
+      }
+    })
+  }
+
 }

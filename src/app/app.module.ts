@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { PagesRoutingModule } from './pages/pages-routing.module';
 import { PagesModule } from './pages/pages.module';
 import { AuthModule } from './auth/auth.module';
-import { OfferModule } from './buisness/offer/offer.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,8 @@ import { OfferModule } from './buisness/offer/offer.module';
     HttpClientModule,
     PagesRoutingModule,
     PagesModule,
-    AuthModule
+    AuthModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

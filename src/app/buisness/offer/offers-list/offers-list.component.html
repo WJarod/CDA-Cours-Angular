@@ -1,5 +1,5 @@
 <button class="button is-primary mt-6" (click)="!writeBlacklisted ? writeBlacklisted = true : writeBlacklisted = false">
-{{!writeBlacklisted ? 'Afficher les offres blacklistées (' + blacklistedOffers + ')' : 'Cacher les offres blacklistées'}}
+{{!writeBlacklisted ? 'View blacklisted offers (' + blacklistedOffers + ')' : 'Hide blacklisted offers'}}
 </button>
 
 <div class="is-one-quarter" *ngFor="let offer of offers">
@@ -19,4 +19,11 @@
             </app-offer-preview>
         </div>
     </ng-template>
-</div>
+</div> 
+
+<!-- <div class="is-one-quarter" *ngFor="let offer of offers | blackListFilter: writeBlacklisted">
+    <app-offer-preview 
+    [data]="offer" 
+    (blacklist)="blacklistedOffer($event)">
+    </app-offer-preview>
+</div> -->
