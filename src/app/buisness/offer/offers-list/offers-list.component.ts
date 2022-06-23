@@ -21,23 +21,16 @@ export class OffersListComponent implements OnInit {
 
   ngOnInit(): void {
     this.writeDatas();
-    this.checkBlacklisted(this.offers)
+    this.offerService.getObservableOffers().subscribe(observableOffer => {
+      this.offers = observableOffer;
+      this.checkBlacklisted(this.offers);
+      this.writeDatas();
+    },
+    errormessage => console.log(errormessage));
   }
 
   writeDatas(): void {
     console.log(this.offers);
-  }
-
-  blacklistedOffer(str: string): void {
-    console.log('Cette offre a ete blackliste : ' + str);
-    this.checkBlacklisted(this.offers)
-    this.writeDatas();
-  }
-
-  unBlacklistedOffer(str: string): void {
-    console.log('Cette offre a ete unBlackliste : ' + str);
-    this.checkBlacklisted(this.offers)
-    this.writeDatas();
   }
 
   checkBlacklisted(offers: Offer[]): void {

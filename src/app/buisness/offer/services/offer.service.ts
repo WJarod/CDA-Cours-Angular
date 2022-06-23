@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Offer } from '../models/offer';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OfferService {
-
-  constructor() { 
-    console.log('OfferService created');
-  }
 
   selectedOffer?: Offer;
 
@@ -61,6 +58,12 @@ export class OfferService {
     }
   ];
 
+  private observableOffer = new BehaviorSubject<Offer[]>(this.offers);
+
+  constructor() { 
+    console.log('OfferService created');
+  }
+
   getById(id: string): Offer | undefined {
     return this.offers.find(offer => offer.id === id);
   }
@@ -69,7 +72,46 @@ export class OfferService {
     return this.offers;
   }
 
+  getObservableOffers(): Observable<Offer[]> {
+    return this.observableOffer.asObservable();
+  }
+
+  getSubjectOffer(): Subject<Offer[]> {
+    return this.observableOffer;
+  }
+
+
+  addOffer(offer: Offer): void {
+    this.observableOffer.getValue().push(offer);
+    this.getSubjectOffer().next(this.observableOffer.getValue());
+  }
+
+  updateOffer(offer: Offer[]): void {
+    this.getSubjectOffer().next(offer);
+  }
+
   selecteOffer(offer: Offer): void { 
     this.selectedOffer = offer;
   }
+
+  blacklistedUnBlacklisteOffer(offer: Offer): void {
+    if (offer.isBlacklisted) {
+      this.observableOffer.getValue().forEach(o => {
+        if (offer.id === o.id) {
+          offer.isBlacklisted = false;
+        }
+        this.observableOffer.next(this.observableOffer.getValue());
+    })
+    }
+    else 
+    { 
+      this.observableOffer.getValue().forEach(o => {
+        if (offer.id === o.id) {
+          offer.isBlacklisted = true;
+        }
+        this.observableOffer.next(this.observableOffer.getValue());
+    }) 
+    }
+  }
+
 }

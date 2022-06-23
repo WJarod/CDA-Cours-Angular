@@ -6,16 +6,14 @@
     <div *ngIf="!writeBlacklisted; else elseBlock">
         <div *ngIf="!offer.isBlacklisted">
             <app-offer-preview 
-            [data]="offer" 
-            (blacklist)="blacklistedOffer($event)">
+            [data]="offer">
             </app-offer-preview>
         </div>
     </div>
     <ng-template #elseBlock>
         <div *ngIf="offer.isBlacklisted">
             <app-offer-preview 
-            [data]="offer" 
-            (unBlacklist)="unBlacklistedOffer($event)">
+            [data]="offer">
             </app-offer-preview>
         </div>
     </ng-template>

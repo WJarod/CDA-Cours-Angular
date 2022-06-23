@@ -12,41 +12,20 @@ import { OfferService } from '../services/offer.service';
 export class OfferPreviewComponent implements OnInit {
 
   @Input('data') offer: Offer = {}; 
-  @Output('blacklist') blacklistEmitter = new EventEmitter<string>();
-  @Output('unBlacklist') unBlacklistEmitter = new EventEmitter<string>();
 
   constructor(
     private offerService: OfferService,
     private router: Router
-    ) 
-  {
-    this.blacklistEmitter.subscribe(() => {
-      console.log('blacklist');
-      console.log(this.offer);
-    }
-    );
-    this.unBlacklistEmitter.subscribe(() => {
-      console.log('unBlacklist');
-      console.log(this.offer);
-    }
-    );
-  }
+    ){}
 
   ngOnInit(): void {
   }
 
-  onChange(){
-    this.blacklistEmitter.emit(this.offer.id);
-  }
-
-  blacklistedOffer(): void {
-    this.offer.isBlacklisted = true;
-    this.blacklistEmitter.emit(this.offer.id);
-  }
-
-  unBlacklistedOffer(): void {
-    this.offer.isBlacklisted = false;
-    this.unBlacklistEmitter.emit(this.offer.id);
+  blacklistedUnBlacklisteOffer(): void {
+    if (this.offer.isBlacklisted) {
+      this.offerService.blacklistedUnBlacklisteOffer(this.offer);
+    }
+    else { this.offerService.blacklistedUnBlacklisteOffer(this.offer); }
   }
 
   selecteOffer(offer: Offer): void {
