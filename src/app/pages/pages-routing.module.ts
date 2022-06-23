@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { MyOfferComponent } from './my-offer/my-offer.component';
 import { MyFavOffersComponent } from './my-fav-offers/my-fav-offers.component';
 import { MyApplyOffersComponent } from './my-apply-offers/my-apply-offers.component';
+import { CreateOfferComponent } from './create-offer/create-offer.component';
 
 const child_routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -12,6 +13,7 @@ const child_routes: Routes = [
   { path: 'offer/:id', component: MyOfferComponent },
   { path: 'fav-offers', component: MyFavOffersComponent },
   { path: 'apply-offers', component: MyApplyOffersComponent },
+  { path: 'create-offer', component: CreateOfferComponent },
 ];
 
 @NgModule({

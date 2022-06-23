@@ -1,0 +1,42 @@
+<app-nav></app-nav>
+<div class="columns is-mobile mr-0 mt-6">
+    <div class="column is-three-fifths is-offset-one-fifth">
+        <form [formGroup]="createOfferForm" (ngSubmit)="onSubmit()"> 
+            
+            <div class="field">
+                <label class="label" for="designation">Designation</label>
+                <div class="control">
+                  <input class="input" type="text" placeholder="Text input" id="designation" formControlName="designation">
+                </div>
+              </div>
+              
+              <div class="field">
+                <label class="label" for="contract">Contract</label>
+                <div class="control">
+                  <input class="input" type="text" placeholder="Text input" id="contract" formControlName="contract">
+                </div>
+              </div>
+              
+              <div class="field">
+                <label class="label" for="dessalaryignation">Salary</label>
+                <div class="control">
+                  <input class="input" type="text" placeholder="Text input" id="salary" formControlName="salary">
+                </div>
+              </div>
+              
+              <div class="field">
+                <label class="label" for="description">Description</label>
+                <div class="control">
+                  <textarea class="textarea" placeholder="Textarea" id="description" formControlName="description"></textarea>
+                </div>
+              </div>
+              
+              <div class="field is-grouped">
+                <div class="control">
+                  <button class="button is-primary is-outlined" type="submit">Create</button>
+                </div>
+              </div>
+
+        </form>
+    </div>
+</div>

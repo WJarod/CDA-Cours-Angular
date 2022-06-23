@@ -7,6 +7,8 @@ import { MyOfferComponent } from './my-offer/my-offer.component';
 import { OfferService } from '../buisness/offer/services/offer.service';
 import { MyFavOffersComponent } from './my-fav-offers/my-fav-offers.component';
 import { MyApplyOffersComponent } from './my-apply-offers/my-apply-offers.component';
+import { CreateOfferComponent } from './create-offer/create-offer.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -16,11 +18,14 @@ import { MyApplyOffersComponent } from './my-apply-offers/my-apply-offers.compon
     MyOfferComponent,
     MyFavOffersComponent,
     MyApplyOffersComponent,
+    CreateOfferComponent,
   ],
   imports: [
     CommonModule,
     LayoutsModule,
-    OfferModule
+    OfferModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class PagesModule { }
