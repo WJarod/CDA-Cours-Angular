@@ -4,7 +4,7 @@
 
 <div class="is-one-quarter" *ngFor="let offer of offers">
     <div *ngIf="!writeBlacklisted; else elseBlock">
-        <div *ngIf="!offer.isBlacklisted && !offer.isFavorite">
+        <div *ngIf="!offer.isBlacklisted && !offer.isFavorite && !offer.isApply">
             <app-offer-preview 
             [data]="offer">
             </app-offer-preview>

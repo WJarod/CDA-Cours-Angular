@@ -1,0 +1,11 @@
+<app-nav></app-nav>
+<div class="columns is-mobile">
+    <div class="column is-three-fifths is-offset-one-fifth">
+        <div class="is-one-quarter" *ngFor="let offer of offers">
+            <div *ngIf="offer.isApply">
+              <app-offer-preview [data]="offer">
+              </app-offer-preview>
+            </div>
+          </div>
+    </div>
+</div>

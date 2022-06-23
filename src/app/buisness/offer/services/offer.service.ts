@@ -64,14 +64,6 @@ export class OfferService {
     console.log('OfferService created');
   }
 
-  getById(id: string): Offer | undefined {
-    return this.offers.find(offer => offer.id === id);
-  }
-
-  getOffers(): Offer[] {
-    return this.offers;
-  }
-
   getObservableOffers(): Observable<Offer[]> {
     return this.observableOffer.asObservable();
   }
@@ -87,7 +79,6 @@ export class OfferService {
     return this.observableOffer;
   }
 
-
   addOffer(offer: Offer): void {
     this.observableOffer.getValue().push(offer);
     this.getSubjectOffer().next(this.observableOffer.getValue());
@@ -102,41 +93,41 @@ export class OfferService {
   }
 
   blacklistedUnBlacklisteOffer(offer: Offer): void {
-    if (offer.isBlacklisted) {
-      this.observableOffer.getValue().find(o => {
-        if (o.id === offer.id) {
-          o.isBlacklisted = false;
-        }})
-    }
-    else 
-    { 
-      this.observableOffer.getValue().find(o => {
-        if (offer.id === o.id) {
-          offer.isBlacklisted = true;
-        }
-        this.observableOffer.next(this.observableOffer.getValue());
-    }) 
-    }
-  }
+    this.observableOffer.getValue().find(o => {
+      if (o.id === offer.id) {
+        o.isBlacklisted = !o.isBlacklisted;
+        console.log(o)
+      }
+      this.observableOffer.next(this.observableOffer.getValue());
+    })}
 
   favoriteUnFavoriteOffer(offer: Offer): void {
-    if (offer.isFavorite) {
       this.observableOffer.getValue().find(o => {
         if (offer.id === o.id) {
-          offer.isFavorite = false;
+          o.isFavorite = !o.isFavorite;
+          console.log(o)
         }
         this.observableOffer.next(this.observableOffer.getValue());
     })
-    }
-    else 
-    { 
-      this.observableOffer.getValue().find(o => {
-        if (offer.id === o.id) {
-          offer.isFavorite = true;
-        }
-        this.observableOffer.next(this.observableOffer.getValue());
-    }) 
-    }
   }
+
+  applyOffer(offer: Offer): void {
+    this.observableOffer.getValue().find(o => {
+      if (offer.id === o.id) {
+        o.isApply = !o.isApply;
+        console.log(o)
+      }
+      this.observableOffer.next(this.observableOffer.getValue());
+  })
+  }
+
+  openOffer(offer: Offer): void {
+    this.observableOffer.getValue().find(o => {
+      if (offer.id === o.id) {
+        o.isOpen = !o.isOpen;
+        console.log(o)
+      }
+      this.observableOffer.next(this.observableOffer.getValue());
+    })}
 
 }

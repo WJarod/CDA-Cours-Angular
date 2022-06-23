@@ -4,12 +4,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { MyOfferComponent } from './my-offer/my-offer.component';
 import { MyFavOffersComponent } from './my-fav-offers/my-fav-offers.component';
+import { MyApplyOffersComponent } from './my-apply-offers/my-apply-offers.component';
 
 const child_routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'offer/:id', component: MyOfferComponent },
   { path: 'fav-offers', component: MyFavOffersComponent },
+  { path: 'apply-offers', component: MyApplyOffersComponent },
 ];
 
 @NgModule({

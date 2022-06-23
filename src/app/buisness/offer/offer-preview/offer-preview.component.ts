@@ -22,22 +22,23 @@ export class OfferPreviewComponent implements OnInit {
   }
 
   blacklistedUnBlacklisteOffer(): void {
-    if (this.offer.isBlacklisted) {
-      this.offerService.blacklistedUnBlacklisteOffer(this.offer);
-    }
-    else { this.offerService.blacklistedUnBlacklisteOffer(this.offer); }
+    this.offerService.blacklistedUnBlacklisteOffer(this.offer);
   }
 
   favoriteUnFavoriteOffer(): void {
-    console.log(this.offer);
-    if (this.offer.isFavorite) {
-      this.offerService.favoriteUnFavoriteOffer(this.offer);
-    }
-    else { this.offerService.favoriteUnFavoriteOffer(this.offer); }
+    this.offerService.favoriteUnFavoriteOffer(this.offer);
+  }
+
+  applyOffer(): void {
+    this.openCloseModal();
+    this.offerService.applyOffer(this.offer);
+  }
+
+  openCloseModal(): void {
+    this.offerService.openOffer(this.offer);
   }
 
   selecteOffer(offer: Offer): void {
-    console.log(offer);
     this.offerService.selecteOffer(offer)
     this.router.navigate(['/offer/'+ offer.id]);
   }

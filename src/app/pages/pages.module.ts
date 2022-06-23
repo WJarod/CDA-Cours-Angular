@@ -6,6 +6,7 @@ import { OfferModule } from '../buisness/offer/offer.module';
 import { MyOfferComponent } from './my-offer/my-offer.component';
 import { OfferService } from '../buisness/offer/services/offer.service';
 import { MyFavOffersComponent } from './my-fav-offers/my-fav-offers.component';
+import { MyApplyOffersComponent } from './my-apply-offers/my-apply-offers.component';
 
 
 
@@ -14,6 +15,7 @@ import { MyFavOffersComponent } from './my-fav-offers/my-fav-offers.component';
     HomeComponent,
     MyOfferComponent,
     MyFavOffersComponent,
+    MyApplyOffersComponent,
   ],
   imports: [
     CommonModule,

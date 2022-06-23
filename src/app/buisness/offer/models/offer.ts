@@ -7,4 +7,5 @@ export interface Offer {
     isApply?: boolean;
     isFavorite?: boolean;
     isBlacklisted?: boolean;
+    isOpen?: boolean;
 }

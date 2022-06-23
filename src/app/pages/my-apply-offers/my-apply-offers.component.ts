@@ -3,14 +3,14 @@ import { Offer } from 'src/app/buisness/offer/models/offer';
 import { OfferService } from 'src/app/buisness/offer/services/offer.service';
 
 @Component({
-  selector: 'app-my-fav-offers',
-  templateUrl: './my-fav-offers.component.html',
-  styleUrls: ['./my-fav-offers.component.scss']
+  selector: 'app-my-apply-offers',
+  templateUrl: './my-apply-offers.component.html',
+  styleUrls: ['./my-apply-offers.component.scss']
 })
-export class MyFavOffersComponent implements OnInit {
+export class MyApplyOffersComponent implements OnInit {
 
   offers: Offer[] = [];
-
+  
   constructor(
     private offerService: OfferService,
   ) { }
@@ -21,4 +21,5 @@ export class MyFavOffersComponent implements OnInit {
     },
     errormessage => console.log(errormessage));
   }
+
 }
