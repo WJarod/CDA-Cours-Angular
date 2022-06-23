@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { Offer } from '../models/offer';
 
 @Injectable({
@@ -76,6 +76,13 @@ export class OfferService {
     return this.observableOffer.asObservable();
   }
 
+  getObservableOffer(id: string): Observable<Offer | undefined> {
+    return this.observableOffer.asObservable()
+      .pipe(
+        map(offers => offers.find(offer => offer.id === id))
+      );
+  }
+
   getSubjectOffer(): Subject<Offer[]> {
     return this.observableOffer;
   }
@@ -96,18 +103,36 @@ export class OfferService {
 
   blacklistedUnBlacklisteOffer(offer: Offer): void {
     if (offer.isBlacklisted) {
-      this.observableOffer.getValue().forEach(o => {
+      this.observableOffer.getValue().find(o => {
+        if (o.id === offer.id) {
+          o.isBlacklisted = false;
+        }})
+    }
+    else 
+    { 
+      this.observableOffer.getValue().find(o => {
         if (offer.id === o.id) {
-          offer.isBlacklisted = false;
+          offer.isBlacklisted = true;
+        }
+        this.observableOffer.next(this.observableOffer.getValue());
+    }) 
+    }
+  }
+
+  favoriteUnFavoriteOffer(offer: Offer): void {
+    if (offer.isFavorite) {
+      this.observableOffer.getValue().find(o => {
+        if (offer.id === o.id) {
+          offer.isFavorite = false;
         }
         this.observableOffer.next(this.observableOffer.getValue());
     })
     }
     else 
     { 
-      this.observableOffer.getValue().forEach(o => {
+      this.observableOffer.getValue().find(o => {
         if (offer.id === o.id) {
-          offer.isBlacklisted = true;
+          offer.isFavorite = true;
         }
         this.observableOffer.next(this.observableOffer.getValue());
     }) 

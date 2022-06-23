@@ -5,6 +5,7 @@ import { LayoutsModule } from '../layouts/layouts.module';
 import { OfferModule } from '../buisness/offer/offer.module';
 import { MyOfferComponent } from './my-offer/my-offer.component';
 import { OfferService } from '../buisness/offer/services/offer.service';
+import { MyFavOffersComponent } from './my-fav-offers/my-fav-offers.component';
 
 
 
@@ -12,6 +13,7 @@ import { OfferService } from '../buisness/offer/services/offer.service';
   declarations: [
     HomeComponent,
     MyOfferComponent,
+    MyFavOffersComponent,
   ],
   imports: [
     CommonModule,

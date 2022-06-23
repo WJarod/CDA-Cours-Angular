@@ -1,0 +1,7 @@
+<app-nav></app-nav>
+<div class="is-one-quarter" *ngFor="let offer of offers">
+  <div *ngIf="offer.isFavorite">
+    <app-offer-preview [data]="offer">
+    </app-offer-preview>
+  </div>
+</div>

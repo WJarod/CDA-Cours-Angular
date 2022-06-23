@@ -13,24 +13,18 @@ export class OffersListComponent implements OnInit {
 
   blacklistedOffers: number = 0;
 
-  offers: Offer[] = this.offerService.getOffers();
+  offers: Offer[] = [];
 
   constructor(
     private offerService: OfferService,
   ) { }
 
   ngOnInit(): void {
-    this.writeDatas();
     this.offerService.getObservableOffers().subscribe(observableOffer => {
       this.offers = observableOffer;
       this.checkBlacklisted(this.offers);
-      this.writeDatas();
     },
     errormessage => console.log(errormessage));
-  }
-
-  writeDatas(): void {
-    console.log(this.offers);
   }
 
   checkBlacklisted(offers: Offer[]): void {
