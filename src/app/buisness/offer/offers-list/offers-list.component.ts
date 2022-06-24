@@ -26,7 +26,6 @@ export class OffersListComponent implements OnInit {
     },
     errormessage => console.log(errormessage));
 
-    //increment blacklist offer
     this.offerService.getBlackLidtOffer().subscribe(count => this.blacklistedOffers = count)
   }
 

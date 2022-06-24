@@ -20,7 +20,8 @@ import { RouterModule } from '@angular/router';
     PagesRoutingModule,
     PagesModule,
     AuthModule,
-    RouterModule
+    RouterModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
