@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { map } from 'rxjs';
 import { Offer } from '../models/offer';
 import { OfferService } from '../services/offer.service';
 
@@ -22,18 +23,11 @@ export class OffersListComponent implements OnInit {
   ngOnInit(): void {
     this.offerService.getObservableOffers().subscribe(observableOffer => {
       this.offers = observableOffer;
-      this.checkBlacklisted(this.offers);
     },
     errormessage => console.log(errormessage));
-  }
 
-  checkBlacklisted(offers: Offer[]): void {
-    this.blacklistedOffers = 0;
-    offers.forEach(offer => { 
-      if (offer.isBlacklisted) {
-        this.blacklistedOffers++;
-      }
-    })
+    //increment blacklist offer
+    this.offerService.getBlackLidtOffer().subscribe(count => this.blacklistedOffers = count)
   }
 
 }

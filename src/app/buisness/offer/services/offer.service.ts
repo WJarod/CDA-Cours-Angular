@@ -130,4 +130,12 @@ export class OfferService {
       this.observableOffer.next(this.observableOffer.getValue());
     })}
 
+  getBlackLidtOffer(): Observable<number> {
+    return this.observableOffer.asObservable()
+      .pipe(
+        map(offers => offers.filter(o => o.isBlacklisted)),
+        map(offers => offers.length)
+    );
+  }
+
 }

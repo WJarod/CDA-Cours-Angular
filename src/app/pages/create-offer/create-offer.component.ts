@@ -17,12 +17,12 @@ export class CreateOfferComponent implements OnInit {
     private offerService: OfferService,
   ) { }
 
-  createOfferForm = this.formBuilder.nonNullable.group<Offer>({
+  createOfferForm = this.formBuilder.nonNullable.group({
     id: this.getRandomInt().toString(),
-    designation: '',
-    description: '',
-    contract: '',
-    salary: '',
+    designation: [''],
+    description: [''],
+    contract: [''],
+    salary: [''],
     isApply: false,
     isFavorite: false,
     isBlacklisted: false,
@@ -37,9 +37,10 @@ export class CreateOfferComponent implements OnInit {
   }
 
   async onSubmit(): Promise<void> {
+    let objet = this.createOfferForm.value as Offer;
     console.log(this.createOfferForm.value);
     this.createOfferForm.reset();
-    this.offerService.addOffer(this.createOfferForm.value);
+    this.offerService.addOffer(objet);
     this.router.navigate(['/home']);
   }
 }
