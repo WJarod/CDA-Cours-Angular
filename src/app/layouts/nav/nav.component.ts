@@ -14,8 +14,8 @@ export class NavComponent implements OnInit {
   }
 
   deconexion(): void {
-    localStorage.setItem('token', 'false');
-    if(localStorage.getItem('token') == "false")
+    localStorage.setItem('user-token', 'false');
+    if(localStorage.getItem('user-token') == "false")
     {
       console.log("deconexion")
       this.router.navigate(['/login'])

@@ -17,8 +17,8 @@ export class LoginComponent implements OnInit {
   }
 
   forceLogin(){
-    localStorage.setItem('token', 'true');
-      if(localStorage.getItem('token') == "true")
+    localStorage.setItem('user-token', 'true');
+      if(localStorage.getItem('user-token') == "true")
       {
         console.log("login")
         this.router.navigate(['/'])

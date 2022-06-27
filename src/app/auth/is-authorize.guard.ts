@@ -14,7 +14,7 @@ export class IsAuthorizeGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-      if(localStorage.getItem('token') == "true"){
+      if(localStorage.getItem('user-token') == "true"){
         console.log("Authorized");
         return true;
       }else{

@@ -2,6 +2,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
+import { TokensService } from 'src/app/auth/services/tokens.service';
 import { ApiOffer } from '../models/apiOffer';
 import { Data } from '../models/data';
 import { Offer } from '../models/offer';
@@ -21,35 +22,55 @@ export class OfferService {
   received
   to its subscribers. */
   private observableOffer = new BehaviorSubject<Offer[]>(this.offers);
+  
+  private API_URL = 'https://api.emploi-store.fr/partenaire/offresdemploi/v2/offres/search'
 
   constructor(
     private httpClient: HttpClient,
+    private tokensService: TokensService,
   ) { 
     console.log('OfferService created');
     this.fetchDataFromApi()
-  }
+  } 
 
-  fetchDataFromApi(): void {
-    this.httpClient.get<Data>('https://www.arbeitnow.com/api/job-board-api')
-      .subscribe(
-        d => {
-          d.data.forEach(o => {
-            let newOffer: Offer = (
-              {
-                id: this.getRandomInt().toString(),
-                designation: o.title,
-                description: o.description,
-                contract: o.job_types[0],
-                salary: o.created_at.toString(),
-                isApply: false,
-                isFavorite: false,
-                isBlacklisted: false,
-              }
-            )
-            this.addOffer(newOffer);
-          })
+  async fetchDataFromApi(): Promise<void> {
+
+    
+    
+    // this.tokensService.getToken().subscribe(token => {
+    //   console.log('token: ', token);
+      
+      
+    // }
+    // );
+    
+    this.httpClient.get<Offer[]>(this.API_URL,
+      {
+        headers: {
+          'Authorization': 'Bearer xwP4T-qMwSOq_NfbptX2IFsIkSA' 
         }
+      }
       )
+      .pipe(
+        map((list : any) => {
+          list.resultats.forEach((e : any) =>{
+            console.log(e)
+            let offer: Offer = {
+              id: e.id,
+              designation: e.intitule,
+              description: e.description,
+              contract: e.typeContrat,
+              salary: e.salaire[0],
+              isApply: false,
+              isFavorite: false,
+              isBlacklisted: false,
+              isOpen: false,
+
+            }
+            this.addOffer(offer)
+          })
+        }))
+    
   }
 
   getRandomInt(): String {
