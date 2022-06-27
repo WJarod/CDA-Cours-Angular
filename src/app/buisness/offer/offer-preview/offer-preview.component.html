@@ -6,9 +6,13 @@
   </header>
   <div class="card-content" (click)="openCloseModal()">
     <div class="content">
-      {{offer.description}}
+      <h5>Description :</h5>
       <br>
-      <p>{{offer.salary}} $</p>
+      <p>{{offer.description | offer:[200, '...'] }}</p>
+      <br>
+      <h5>Salary info :</h5>
+      <br>
+      <p>{{offer.salary}}</p>
     </div>
   </div>
   <footer class="card-footer">
@@ -30,9 +34,13 @@
       <button class="delete" aria-label="close" (click)="openCloseModal()"></button>
     </header>
     <section class="modal-card-body">
-      {{offer.description}}
+      <h5>Description :</h5>
       <br>
-      <p>{{offer.salary}} $</p>
+      <p>{{offer.description}}</p>
+      <br>
+      <h5>Salary info :</h5>
+      <br>
+      <p>{{offer.salary}}</p>
     </section>
     <footer class="modal-card-foot">
       <button class="button is-success" (click)="applyOffer()">{{!offer.isApply ? 'Apply' : 'No longer apply'}}</button>

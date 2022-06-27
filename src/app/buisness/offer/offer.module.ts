@@ -5,6 +5,7 @@ import { OfferPreviewComponent } from './offer-preview/offer-preview.component';
 import { OfferDetailComponent } from './offer-detail/offer-detail.component';
 import { BlackListFilterPipe } from './black-list-filter.pipe';
 import { RouterModule } from '@angular/router';
+import { OfferPipe } from '../offer.pipe';
 
 
 
@@ -13,7 +14,8 @@ import { RouterModule } from '@angular/router';
     OffersListComponent,
     OfferPreviewComponent,
     OfferDetailComponent,
-    BlackListFilterPipe
+    BlackListFilterPipe,
+    OfferPipe
   ],
   imports: [
     CommonModule,

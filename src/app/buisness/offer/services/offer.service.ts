@@ -34,43 +34,35 @@ export class OfferService {
   } 
 
   async fetchDataFromApi(): Promise<void> {
-
     
-    
-    // this.tokensService.getToken().subscribe(token => {
-    //   console.log('token: ', token);
-      
-      
-    // }
-    // );
-    
-    this.httpClient.get<Offer[]>(this.API_URL,
-      {
-        headers: {
-          'Authorization': 'Bearer xwP4T-qMwSOq_NfbptX2IFsIkSA' 
-        }
+    this.tokensService.getToken().subscribe(token => {
+      if (token !== '') {
+        this.httpClient.get<Offer[]>(this.API_URL,
+          { headers: { Authorization: `Bearer ${token}` } }
+        )
+        .subscribe(
+          (e : any) => {
+            e.resultats.forEach((o : any) => {
+              let newOffer: Offer = (
+                {
+                  id: o.id,
+                  designation: o.intitule,
+                  description: o.description,
+                  contract: o.typeContrat,
+                  salary: o.salaire.libelle,
+                  isApply: false,
+                  isFavorite: false,
+                  isBlacklisted: false,
+                  isOpen: false,
+                }
+              )
+              this.addOffer(newOffer);
+            })
+          }
+        )
       }
-      )
-      .pipe(
-        map((list : any) => {
-          list.resultats.forEach((e : any) =>{
-            console.log(e)
-            let offer: Offer = {
-              id: e.id,
-              designation: e.intitule,
-              description: e.description,
-              contract: e.typeContrat,
-              salary: e.salaire[0],
-              isApply: false,
-              isFavorite: false,
-              isBlacklisted: false,
-              isOpen: false,
+     })
 
-            }
-            this.addOffer(offer)
-          })
-        }))
-    
   }
 
   getRandomInt(): String {
