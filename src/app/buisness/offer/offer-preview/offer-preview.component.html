@@ -9,10 +9,12 @@
       <h5>Description :</h5>
       <br>
       <p>{{offer.description | offer:[200, '...'] }}</p>
-      <br>
-      <h5>Salary info :</h5>
-      <br>
-      <p>{{offer.salary}}</p>
+      <div *ngIf="offer.salary !== undefined">
+        <br>
+        <h5>Salary info :</h5>
+        <br>
+        <p>{{offer.salary}}</p>
+      </div>
     </div>
   </div>
   <footer class="card-footer">
