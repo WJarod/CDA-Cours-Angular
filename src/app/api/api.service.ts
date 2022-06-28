@@ -9,7 +9,8 @@ import { Offer } from '../buisness/offer/models/offer';
 })
 export class ApiService {
 
-  private API_URL = 'https://api.emploi-store.fr/partenaire/offresdemploi/v2/offres/search?range=0-5'
+  private API_URL = 'https://api.emploi-store.fr/partenaire/offresdemploi/v2/offres/search'
+  private API_URL_TOKEN = 'http://localhost:3000'
 
   constructor(
     private httpClient: HttpClient,
@@ -44,5 +45,15 @@ export class ApiService {
           return list;
         })
       ));
+  }
+
+  // get token
+  async getToken(): Promise<string> {
+    console.log('getToken')
+    return await firstValueFrom(this.httpClient.get<string>(this.API_URL_TOKEN)
+    .pipe(
+      map((data: any) => {
+        return data.access_token;
+      })));
   }
 }
