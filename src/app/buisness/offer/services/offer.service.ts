@@ -2,83 +2,54 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, firstValueFrom, lastValueFrom, map, Observable, Subject } from 'rxjs';
-import { TokensService } from 'src/app/auth/services/tokens.service';
-import { ApiOffer } from '../models/apiOffer';
-import { Data } from '../models/data';
+import { ApiService } from 'src/app/api/api.service';
+import Dao from 'src/app/dao/dao';
 import { Offer } from '../models/offer';
 
 @Injectable({
   providedIn: 'root'
 })
-export class OfferService {
+export class OfferService extends Dao<Offer>{
 
   selectedOffer?: Offer;
 
   offers: Offer[] = [];
 
-  /* It's creating a new BehaviorSubject object, which is a type of Subject. A Subject is an object
-  that
-  can emit values to its subscribers. A BehaviorSubject is a Subject that emits the last value it
-  received
-  to its subscribers. */
   private observableOffers = new BehaviorSubject<Offer[]>(this.offers);
-  
-  private API_URL = 'https://api.emploi-store.fr/partenaire/offresdemploi/v2/offres/search'
 
   constructor(
-    private httpClient: HttpClient,
-    private tokensService: TokensService,
+    private apiService: ApiService,
   ) { 
+    super();
     console.log('OfferService created');
-    // j appel ma methode dans le constructeur pour recup les offres au lancement de mon app 
-    this.fetchDataFromApi()
   } 
 
-  // Cette methode permet de recuperer les offres de l'api de pole emploi
-  fetchDataFromApi(): void {
-
-    // je souscris a getToken() du token service 
-    this.tokensService.getToken().subscribe(token => {
-      // je verifie que mon token n est pas nul
-      if (token !== '') {
-        // je recupere les données de l'api
-        this.httpClient.get<Offer[]>(this.API_URL,
-          // j ajoute un headers avec mon token
-          { headers: { Authorization: `Bearer ${token}` } }
-        )
-        .subscribe(
-          (e : any) => {
-            // je boucle les données
-            e.resultats.forEach((o : any) => {
-              // je créé un nouvel objet offer
-              let newOffer: Offer = (
-                {
-                  id: o.id,
-                  designation: o.intitule,
-                  description: o.description,
-                  contract: o.typeContrat,
-                  salary: o.salaire.libelle,
-                  isApply: false,
-                  isFavorite: false,
-                  isBlacklisted: false,
-                  isOpen: false,
-                }
-              )
-              // je l'ajoute à ma liste de mon BehaviorSubject 
-              this.addOffer(newOffer);
-            })
-          }
-        )
+  // methode qui permet de peupler notre local storage 
+  async setObversableOffers(): Promise<void> 
+  {
+    // utilise get data de mon api service
+    await this.apiService.getData()
+    /* si il ny a pas d'erreur on set les donnees recupere dans le local storage 
+    avec la methode addData de notre dao
+    et on update notre behavior subject */
+    .then(offers => {
+      this.addData(offers);
+      this.updateOffers(offers);
+    })
+    .catch(errormessage => {
+      /* si il y a une erreur on utilise les donner du local storage
+      et on update notre behavior subject */
+      console.log(errormessage);
+      const localOffer = localStorage.getItem('data');
+      if (localOffer !== null) {
+        this.updateOffers(JSON.parse(localOffer))
       }
-     })
-
-  }
-
-  getRandomInt(): String {
-    return Math.floor(Math.random() * 10000000000000000000).toString();
+     }
+    );
   }
 
   getObservableOffers(): Observable<Offer[]> {
+    this.setObversableOffers()
     return this.observableOffers.asObservable();
   }
 
@@ -98,8 +69,9 @@ export class OfferService {
     this.getSubjectOffer().next(this.observableOffers.getValue());
   }
 
-  updateOffer(offer: Offer[]): void {
-    this.getSubjectOffer().next(offer);
+  updateOffers(offers: Offer[]): void {
+    this.updateData(offers);
+    this.getSubjectOffer().next(offers);
   }
 
   selecteOffer(offer: Offer): void { 
