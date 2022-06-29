@@ -3,13 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, firstValueFrom, lastValueFrom, map, Observable, Subject } from 'rxjs';
 import { ApiService } from 'src/app/api/api.service';
-import Dao from 'src/app/dao/dao';
+import local from 'src/app/local/local';
 import { Offer } from '../models/offer';
 
 @Injectable({
   providedIn: 'root'
 })
-export class OfferService extends Dao<Offer>{
+export class OfferService extends local<Offer>{
 
   selectedOffer?: Offer;
 
@@ -33,7 +33,7 @@ export class OfferService extends Dao<Offer>{
     avec la methode addData de notre dao
     et on update notre behavior subject */
     .then(offers => {
-      this.addData(offers);
+      this.addDataList(offers, 'offres');
       this.updateOffers(offers);
     })
     .catch(errormessage => {
@@ -70,7 +70,7 @@ export class OfferService extends Dao<Offer>{
   }
 
   updateOffers(offers: Offer[]): void {
-    this.updateData(offers);
+    this.updateDataList(offers, 'offres');
     this.getSubjectOffer().next(offers);
   }
 

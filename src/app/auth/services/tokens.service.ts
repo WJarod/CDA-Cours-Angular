@@ -1,41 +1,46 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, map, Observable, Subject } from 'rxjs';
 import { ApiService } from 'src/app/api/api.service';
 import { Data } from 'src/app/buisness/offer/models/data';
+import local from 'src/app/local/local';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TokensService {
+export class TokensService extends local<string>{
 
   private token = new BehaviorSubject<string>('')
 
+  private API_URL_TOKEN = 'http://localhost:3000'
+  
   constructor(
     private httpClient: HttpClient,
-    private apiService: ApiService,
   ) 
   {
+    super();
     // je recupere le token de mon localStorage
     const token = localStorage.getItem('token')
     if (token === null)
     {
-      this.setTokenFromApi()
+      // si je n est pas de token je le recup un sur mon api
+      this.getTokenFromAPI()
     }
     else if (token !== null){
       // j'envoi le token de mon localStorage dans mon behavior subject
       this.setToken(token)
     }
   }
-  
-  async setTokenFromApi(): Promise<void> {
-    await this.apiService.getToken().then((tkn : any) => {
-      localStorage.setItem('token', tkn.access_token)
-      this.setToken(tkn.access_token)
-    }
-    ).catch(err => {
-      console.log(err)
-    })
+
+  //get token de l api
+  async getTokenFromAPI(): Promise<void> {
+    console.log('getToken')
+    this.httpClient.get<string>('http://localhost:3000').subscribe((tkn : any) => {
+        // j'envoi le token recu dans mon behavior subject et dans mon localStorage
+        this.addData(tkn.access_token, 'token')
+        this.setToken(tkn.access_token)
+      }
+      )
   }
 
   getToken(): Observable<string> {
