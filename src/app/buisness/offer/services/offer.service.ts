@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, firstValueFrom, lastValueFrom, map, Observable, Subject } from 'rxjs';
 import { ApiService } from 'src/app/api/api.service';
-import local from 'src/app/local/local';
+import local from 'src/app/data/local';
 import { Offer } from '../models/offer';
 
 @Injectable({

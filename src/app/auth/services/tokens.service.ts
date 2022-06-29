@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, firstValueFrom, map, Observable, Subject } from 'rxjs';
 import { ApiService } from 'src/app/api/api.service';
 import { Data } from 'src/app/buisness/offer/models/data';
-import local from 'src/app/local/local';
+import local from 'src/app/data/local';
 
 @Injectable({
   providedIn: 'root'

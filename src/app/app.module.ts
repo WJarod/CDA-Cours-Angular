@@ -8,7 +8,7 @@ import { PagesRoutingModule } from './pages/pages-routing.module';
 import { PagesModule } from './pages/pages.module';
 import { AuthModule } from './auth/auth.module';
 import { RouterModule } from '@angular/router';
-import { TokenInterceptor } from './data/token.interceptor';
+import { TokenInterceptor } from './interceptor/token.interceptor';
 
 @NgModule({
   declarations: [
