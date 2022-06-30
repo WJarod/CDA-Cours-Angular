@@ -21,12 +21,46 @@ export class OffersListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // on subscribe a notre observable
     this.offerService.getObservableOffers().subscribe(observableOffer => {
+      // on peuple notre tableau avec les donner de l observable
       this.offers = observableOffer;
     },
     errormessage => console.log(errormessage));
 
     this.offerService.getBlackLidtOffer().subscribe(count => this.blacklistedOffers = count)
+  }
+
+  ngDocheck() {
+    console.log('ngDoCheck');
+  }
+
+  ngAfterContentChecked() {
+    console.log('ngAfterContentChecked');
+  }
+
+  ngAfterContentInit() {
+    console.log('ngAfterContentInit');
+  }
+
+  ngAfterViewChecked() {
+    console.log('ngAfterViewChecked');
+  }
+
+  ngAfterViewInit() {
+    console.log('ngAfterViewInit');
+  }
+
+  ngOnDestroy() {
+    console.log('ngOnDestroy');
+  }
+
+  ngOnChanges() {
+    console.log('ngOnChanges');
+  }
+
+  ngDoCheck() {
+    console.log('ngDoCheck');
   }
 
 }

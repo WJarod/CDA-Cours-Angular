@@ -37,7 +37,7 @@ export class TokensService extends local<string>{
     console.log('getToken')
     this.httpClient.get<string>('http://localhost:3000').subscribe((tkn : any) => {
         // j'envoi le token recu dans mon behavior subject et dans mon localStorage
-        this.addData(tkn.access_token, 'token')
+        this.setData(tkn.access_token, 'token')
         this.setToken(tkn.access_token)
       }
       )

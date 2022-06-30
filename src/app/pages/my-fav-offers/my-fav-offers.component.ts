@@ -16,9 +16,17 @@ export class MyFavOffersComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.offerService.getObservableOffers().subscribe(observableOffer => {
-      this.offers = observableOffer;
-    },
-    errormessage => console.log(errormessage));
+    
+    
+    const listLocal = localStorage.getItem('favorites')
+
+    if (listLocal !== null) {
+      this.offers = JSON.parse(listLocal);
+    }
+    else 
+      this.offerService.getFavoriteOffer(true).subscribe(observableOffer => {
+        this.offers = observableOffer;
+      },errormessage => console.log(errormessage));
+
   }
 }

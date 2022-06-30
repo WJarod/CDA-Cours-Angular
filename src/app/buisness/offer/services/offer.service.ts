@@ -15,6 +15,7 @@ export class OfferService extends local<Offer>{
 
   offers: Offer[] = [];
 
+  // on creer un beavior subject typer avec une list d offre et on assigne une liste vide
   private observableOffers = new BehaviorSubject<Offer[]>(this.offers);
 
   constructor(
@@ -33,7 +34,7 @@ export class OfferService extends local<Offer>{
     avec la methode addData de notre dao
     et on update notre behavior subject */
     .then(offers => {
-      this.addDataList(offers, 'offres');
+      this.setDataList(offers, 'offres');
       this.updateOffers(offers);
     })
     .catch(errormessage => {
@@ -49,13 +50,16 @@ export class OfferService extends local<Offer>{
   }
 
   getObservableOffers(): Observable<Offer[]> {
+    // on get les donner de l api
     this.setObversableOffers()
+    // on retourne un observable
     return this.observableOffers.asObservable();
   }
 
   getObservableOffer(id: string): Observable<Offer | undefined> {
     return this.observableOffers.asObservable()
       .pipe(
+        // j utilise un pipe pour ensuite map pour recuperer une offre a partir d'un id
         map(offers => offers.find(offer => offer.id === id))
       );
   }
@@ -65,6 +69,7 @@ export class OfferService extends local<Offer>{
   }
 
   addOffer(offer: Offer): void {
+    // on push notre data dans notre beavior subject
     this.observableOffers.getValue().push(offer);
     this.getSubjectOffer().next(this.observableOffers.getValue());
   }
@@ -88,10 +93,24 @@ export class OfferService extends local<Offer>{
     })}
 
   favoriteUnFavoriteOffer(offer: Offer): void {
+    let favoritesOffer: Offer[] = [];
+    let unFavoriteOffer: Offer[] = [];
+    this.getFavoriteOffer(true).subscribe(offers => {
+      favoritesOffer = offers;
+    })
+    this.getFavoriteOffer(false).subscribe(offers => {
+      unFavoriteOffer = offers;
+    })
       this.observableOffers.getValue().find(o => {
+
         if (offer.id === o.id) {
           o.isFavorite = !o.isFavorite;
           console.log(o)
+          if (o.isFavorite === false) {
+            this.deleteDataInList(unFavoriteOffer, o, 'favorites');
+          }else {
+            this.addDataList(favoritesOffer, o, 'favorites');
+          }
         }
         this.observableOffers.next(this.observableOffers.getValue());
     })
@@ -119,9 +138,24 @@ export class OfferService extends local<Offer>{
   getBlackLidtOffer(): Observable<number> {
     return this.observableOffers.asObservable()
       .pipe(
+        // on utilise un pipe pour ensuite map pour recuperer les offre qui sont black listed
         map(offers => offers.filter(o => o.isBlacklisted)),
+        // on utilise le map pour return seleument le nombre d offre black listed
         map(offers => offers.length)
     );
   }
+
+  getFavoriteOffer(isFavorite: boolean): Observable<Offer[]> {
+    if (isFavorite === true) {
+      return this.observableOffers.asObservable()
+        .pipe(
+          map(offers => offers.filter(o => o.isFavorite))
+        );
+    }else
+    {
+    return this.observableOffers.asObservable()
+      .pipe(
+        map(offers => offers.filter(o => o.isFavorite))
+    );}}
 
 }

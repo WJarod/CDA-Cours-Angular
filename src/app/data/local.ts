@@ -4,8 +4,24 @@ import Ilocal from "./iLocal";
 class local<T> implements Ilocal<T> {
 
     constructor(){}
+
+    deleteDataInList(datas: T[], data: T, dataName: string): Promise<T> {
+        // supprime la data dans la list du local storage
+        datas.splice(datas.indexOf(data), 1);
+        // on update le local storage
+        this.updateDataList(datas, dataName);
+        return Promise.resolve(data);
+    }
+
+    addDataList(datas: T[], data: T, dataName: string): Promise<T> {
+        // add la data dans la list du local storage
+        datas.push(data);
+        // on update le local storage
+        this.updateDataList(datas, dataName);
+        return Promise.resolve(data);
+    }
     
-    addDataList(data: T[], dataName: string): Promise<T[]> {
+    setDataList(data: T[], dataName: string): Promise<T[]> {
         // add les data au local storage
         localStorage.setItem(dataName, JSON.stringify(data));
         return Promise.resolve(data);
@@ -18,7 +34,7 @@ class local<T> implements Ilocal<T> {
         return Promise.resolve(data);
     }
 
-    addData(data: T, dataName: string): Promise<T> {
+    setData(data: T, dataName: string): Promise<T> {
         // add les data au local storage
         localStorage.setItem(dataName, JSON.stringify(data).toString());
         return Promise.resolve(data);
